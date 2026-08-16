@@ -1,0 +1,550 @@
+/* --- GLOBAL BUSINESS THEME & VARIABLE CONTROL --- */
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #333333;
+    --card-bg: #ffffff;
+    --sub-text: #666666;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --primary-color: #007bff;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --sub-text: #b0b0b0;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --primary-color: #375a7f;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- LIVE PAGE LOADING PROGRESS BAR --- */
+#pageProgressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0%;
+    background-color: #ffc107;
+    z-index: 10050;
+    transition: width 0.1s ease;
+}
+
+/* --- THEME TOGGLE BUTTON STYLES --- */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 15px;
+    color: #fff;
+    transition: transform 0.2s;
+}
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+/* --- TYPIST EFFECT CURSOR --- */
+.typed-cursor {
+    font-weight: 200;
+    animation: blinkTypist 0.7s infinite;
+}
+@keyframes blinkTypist {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* --- PROFESSIONAL HERO AUTO-SLIDER (FIXED) --- */
+.hero-slider-container {
+    position: relative;
+    width: 100%;
+    height: 550px;
+    overflow: hidden;
+    background: #000000;
+}
+
+.hero-slider {
+    display: flex;
+    width: 1000%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    animation: autoScrollSlider 35s infinite ease-in-out;
+}
+
+/* Force Left to Right alignment inside slider even in Arabic/Urdu */
+body[dir="rtl"] .hero-slider {
+    flex-direction: row;
+}
+
+.hero-slider img {
+    width: 10%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(55%);
+    display: block;
+}
+
+.hero-overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    z-index: 10;
+    width: 80%;
+}
+
+.hero-overlay-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    min-height: 80px;
+}
+
+.hero-overlay-content p {
+    font-size: 1.4rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Smooth Navigation Loop over 10 elements */
+@keyframes autoScrollSlider {
+    0%, 8% { transform: translateX(0); }
+    10%, 18% { transform: translateX(-10%); }
+    20%, 28% { transform: translateX(-20%); }
+    30%, 38% { transform: translateX(-30%); }
+    40%, 48% { transform: translateX(-40%); }
+    50%, 58% { transform: translateX(-50%); }
+    60%, 68% { transform: translateX(-60%); }
+    70%, 78% { transform: translateX(-70%); }
+    80%, 88% { transform: translateX(-80%); }
+    90%, 98% { transform: translateX(-90%); }
+    100% { transform: translateX(0); }
+}
+
+/* Force Left-To-Right direction transformations for animation engine */
+/* Sahi Tareeqa: Keyframes ko hamesha baher alag rakhein */
+@keyframes autoScrollSliderRTL {
+    0%, 8% { transform: translateX(0); }
+    10%, 18% { transform: translateX(10%); }
+    20%, 28% { transform: translateX(20%); }
+    30%, 38% { transform: translateX(30%); }
+    40%, 48% { transform: translateX(40%); }
+    50%, 58% { transform: translateX(50%); }
+    60%, 68% { transform: translateX(60%); }
+    70%, 78% { transform: translateX(70%); }
+    80%, 88% { transform: translateX(80%); }
+    90%, 98% { transform: translateX(90%); }
+    100% { transform: translateX(0); }
+}
+
+/* Agar aapko is animation ko RTL par apply karna hai, to niche is tarah likhein: */
+body[dir="rtl"] .your-slider-track-class {
+    animation: autoScrollSliderRTL 25s infinite linear;
+}
+
+/* --- SKELETON LOADING SCREEN (PREMIUM LAZY LOADING) --- */
+.skeleton-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    height: 360px;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+.skeleton-img {
+    width: 100%;
+    height: 260px;
+    background: linear-gradient(90deg, #eceff1 25%, #f6f7f8 50%, #eceff1 75%);
+    background-size: 200% 100%;
+    animation: skeletonShine 1.5s infinite;
+}
+.skeleton-text {
+    height: 20px;
+    width: 70%;
+    margin: 25px auto 0 auto;
+    background: linear-gradient(90deg, #eceff1 25%, #f6f7f8 50%, #eceff1 75%);
+    background-size: 200% 100%;
+    animation: skeletonShine 1.5s infinite;
+    border-radius: 4px;
+}
+[data-theme="dark"] .skeleton-img, 
+[data-theme="dark"] .skeleton-text {
+    background: linear-gradient(90deg, #2c2c2c 25%, #3a3a3a 50%, #2c2c2c 75%);
+    background-size: 200% 100%;
+}
+@keyframes skeletonShine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Loaded configurations */
+.card-3d.loading img,
+.card-3d.loading .card-info {
+    opacity: 0;
+}
+
+/* --- 3D GLORIOUS GALLERY STYLES --- */
+.three-d-perspective {
+    perspective: 1000px;
+    padding: 60px 20px;
+}
+
+.home-3d-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.gallery-3d-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 35px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card-3d {
+    position: relative;
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+}
+
+.card-3d img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.card-info {
+    padding: 20px;
+    background: var(--card-bg);
+    transform: translateZ(20px);
+    transition: background-color 0.3s, opacity 0.3s ease;
+}
+
+.card-info h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.card-3d:hover {
+    transform: translateY(-12px) rotateX(4deg) rotateY(-2deg) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-3d:hover img {
+    transform: scale(1.06);
+}
+
+/* --- PREMIUM IMAGE LIGHTBOX POP-UP EFFECT --- */
+.lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.lightbox-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    max-width: 85%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.lightbox-modal.show .lightbox-content {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.lightbox-close:hover {
+    color: #bbb;
+}
+
+/* --- INTERACTIVE FAQ ACCORDION --- */
+.faq-section {
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.faq-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: background-color 0.3s;
+}
+.faq-question {
+    padding: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    color: var(--sub-text);
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.faq-item.active .faq-answer {
+    max-height: 200px;
+    padding: 0 20px 20px 20px;
+}
+.faq-toggle-icon {
+    transition: transform 0.3s;
+}
+.faq-item.active .faq-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* --- BACK TO TOP FLOATING BUTTON --- */
+.back-to-top {
+    position: fixed;
+    bottom: 180px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    z-index: 9998;
+}
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+.back-to-top:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+/* --- FLOATING ACTIONS SMART WIDGETS --- */
+.floating-actions-bar {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999;
+}
+
+.action-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    color: white;
+}
+
+.btn-whatsapp { background-color: #25D366; }
+.btn-call { background-color: #007bff; }
+
+/* --- PREMIUM 3D EFFECT FOR OWNER PORTRAIT IN ABOUT PAGE --- */
+.owner-3d-perspective {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.owner-card-3d {
+    position: relative;
+    width: 280px; /* Portrait configuration size */
+    height: 350px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    /* Incline configuration for 3D look */
+    transform: rotateX(6deg) rotateY(-8deg) scale(0.98);
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+}
+
+.owner-img-3d {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+/* Hover Dynamic State (Interactive Physics) */
+.owner-card-3d:hover {
+    transform: translateY(-5px) rotateX(0deg) rotateY(0deg) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
+}
+
+.owner-card-3d:hover .owner-img-3d {
+    transform: scale(1.05);
+}
+/* --- PREMIUM BUSINESS FOOTER LAYOUT --- */
+.business-footer-section {
+    background-color: #1a1a1a; /* Professional Dark Base Layout */
+    color: #ffffff;
+    padding: 60px 0 20px 0;
+    margin-top: 80px;
+    border-top: 3px solid var(--primary-color);
+}
+
+/* Force specific structural rules under light/dark controls if needed */
+[data-theme="dark"] .business-footer-section {
+    background-color: #0d0d0d;
+    border-top: 3px solid var(--primary-color);
+}
+
+.footer-brand-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.footer-brand-desc {
+    font-size: 10.5pt;
+    line-height: 1.7;
+    color: #b3b3b3;
+}
+
+.footer-heading-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 8px;
+    color: #ffffff;
+}
+
+.footer-heading-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+body[dir="rtl"] .footer-heading-title::after {
+    left: auto;
+    right: 0;
+}
+
+.footer-contact-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact-details li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+    font-size: 11pt;
+}
+
+.footer-icon {
+    font-size: 1.2rem;
+}
+
+.footer-text, .footer-link-text {
+    color: #b3b3b3;
+    text-decoration: none;
+    line-height: 1.5;
+    transition: color 0.2s ease;
+}
+
+.footer-link-text:hover {
+    color: var(--primary-color);
+}
+
+.footer-divider-line {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 40px 0 20px 0;
+}
+
+.footer-copyright-text {
+    font-size: 9.5pt;
+    color: #808080;
+    margin: 0;
+}
