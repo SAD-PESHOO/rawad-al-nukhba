@@ -52,109 +52,40 @@ body {
     transform: scale(1.1);
 }
 
-/* --- TYPIST EFFECT CURSOR --- */
-.typed-cursor {
-    font-weight: 200;
-    animation: blinkTypist 0.7s infinite;
-}
-@keyframes blinkTypist {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* --- PROFESSIONAL HERO AUTO-SLIDER (FIXED) --- */
+/* --- BOOTSTRAP CAROUSEL HERO SLIDER (PERFECT PICTURE FITTING) --- */
 .hero-slider-container {
     position: relative;
     width: 100%;
-    height: 550px;
+    height: 500px;
+    max-height: 70vh;
     overflow: hidden;
     background: #000000;
 }
 
-.hero-slider {
-    display: flex;
-    width: 1000%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    animation: autoScrollSlider 35s infinite ease-in-out;
-}
-
-/* Force Left to Right alignment inside slider even in Arabic/Urdu */
-body[dir="rtl"] .hero-slider {
-    flex-direction: row;
-}
-
-.hero-slider img {
-    width: 10%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(55%);
-    display: block;
+.carousel-item img {
+    width: 100%;
+    height: 500px;
+    max-height: 70vh;
+    object-fit: cover; /* Pictures ko baghair katey saaf fit karne ke liye */
+    object-position: center;
+    filter: brightness(70%); /* Text ko mazeed clear dikhane ke liye */
 }
 
 .hero-overlay-content {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #ffffff;
-    z-index: 10;
-    width: 80%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
 }
 
-.hero-overlay-content h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    min-height: 80px;
+.hero-overlay-content a {
+    pointer-events: auto; /* Button clickable rakhne ke liye */
 }
 
-.hero-overlay-content p {
-    font-size: 1.4rem;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-/* Smooth Navigation Loop over 10 elements */
-@keyframes autoScrollSlider {
-    0%, 8% { transform: translateX(0); }
-    10%, 18% { transform: translateX(-10%); }
-    20%, 28% { transform: translateX(-20%); }
-    30%, 38% { transform: translateX(-30%); }
-    40%, 48% { transform: translateX(-40%); }
-    50%, 58% { transform: translateX(-50%); }
-    60%, 68% { transform: translateX(-60%); }
-    70%, 78% { transform: translateX(-70%); }
-    80%, 88% { transform: translateX(-80%); }
-    90%, 98% { transform: translateX(-90%); }
-    100% { transform: translateX(0); }
-}
-
-/* Force Left-To-Right direction transformations for animation engine */
-/* Sahi Tareeqa: Keyframes ko hamesha baher alag rakhein */
-@keyframes autoScrollSliderRTL {
-    0%, 8% { transform: translateX(0); }
-    10%, 18% { transform: translateX(10%); }
-    20%, 28% { transform: translateX(20%); }
-    30%, 38% { transform: translateX(30%); }
-    40%, 48% { transform: translateX(40%); }
-    50%, 58% { transform: translateX(50%); }
-    60%, 68% { transform: translateX(60%); }
-    70%, 78% { transform: translateX(70%); }
-    80%, 88% { transform: translateX(80%); }
-    90%, 98% { transform: translateX(90%); }
-    100% { transform: translateX(0); }
-}
-
-/* Agar aapko is animation ko RTL par apply karna hai, to niche is tarah likhein: */
-body[dir="rtl"] .your-slider-track-class {
-    animation: autoScrollSliderRTL 25s infinite linear;
-}
-
-/* --- SKELETON LOADING SCREEN (PREMIUM LAZY LOADING) --- */
+/* --- SKELETON LOADING SCREEN --- */
 .skeleton-card {
     background: var(--card-bg);
     border-radius: 16px;
@@ -189,33 +120,20 @@ body[dir="rtl"] .your-slider-track-class {
     100% { background-position: -200% 0; }
 }
 
-/* Loaded configurations */
-.card-3d.loading img,
-.card-3d.loading .card-info {
-    opacity: 0;
-}
-
-/* --- 3D GLORIOUS GALLERY STYLES --- */
+/* --- 3D GLORIOUS GALLERY & SERVICES GRID ALIGNMENT FIX --- */
 .three-d-perspective {
     perspective: 1000px;
     padding: 60px 20px;
 }
 
-.home-3d-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
 .gallery-3d-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 35px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
     max-width: 1200px;
     margin: 0 auto;
+    justify-content: center;
 }
 
 .card-3d {
@@ -260,6 +178,14 @@ body[dir="rtl"] .your-slider-track-class {
 .card-3d:hover img {
     transform: scale(1.06);
 }
+
+/* --- VIDEO GALLERY STYLES --- */
+.video-gallery-section { padding: 60px 0; }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 35px; }
+.video-card { background: var(--card-bg, #fff); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid rgba(128,128,128,0.2); }
+.video-card video { width: 100%; height: 220px; object-fit: cover; display: block; background: #000; }
+.video-card-body { padding: 15px; text-align: center; }
+.video-card-body p { font-size: 11pt; color: var(--text-color, #333); margin: 0; }
 
 /* --- PREMIUM IMAGE LIGHTBOX POP-UP EFFECT --- */
 .lightbox-modal {
@@ -309,47 +235,6 @@ body[dir="rtl"] .your-slider-track-class {
 
 .lightbox-close:hover {
     color: #bbb;
-}
-
-/* --- INTERACTIVE FAQ ACCORDION --- */
-.faq-section {
-    padding: 60px 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-.faq-item {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    transition: background-color 0.3s;
-}
-.faq-question {
-    padding: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    user-select: none;
-}
-.faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 20px;
-    color: var(--sub-text);
-    transition: max-height 0.3s ease, padding 0.3s ease;
-}
-.faq-item.active .faq-answer {
-    max-height: 200px;
-    padding: 0 20px 20px 20px;
-}
-.faq-toggle-icon {
-    transition: transform 0.3s;
-}
-.faq-item.active .faq-toggle-icon {
-    transform: rotate(180deg);
 }
 
 /* --- BACK TO TOP FLOATING BUTTON --- */
@@ -415,57 +300,45 @@ body[dir="rtl"] .your-slider-track-class {
 .btn-whatsapp { background-color: #25D366; }
 .btn-call { background-color: #007bff; }
 
-/* --- PREMIUM 3D EFFECT FOR OWNER PORTRAIT IN ABOUT PAGE --- */
+/* --- PERFECT POSTER / OWNER CARD FIX --- */
 .owner-3d-perspective {
-    perspective: 1000px;
+    perspective: 1200px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 30px 0;
 }
 
 .owner-card-3d {
     position: relative;
-    width: 280px; /* Portrait configuration size */
-    height: 350px;
-    border-radius: 16px;
+    width: 100% !important;
+    max-width: 500px !important; /* Poster ke liye mazeed bara aur khula size */
+    height: auto !important;     /* Height khud ba khud poster ke mutabiq adjust hogi */
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-    /* Incline configuration for 3D look */
-    transform: rotateX(6deg) rotateY(-8deg) scale(0.98);
-    transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    margin: 0 auto;
 }
 
 .owner-img-3d {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important; /* Poster ka koi bhi hissa katega nahi */
     display: block;
-    transition: transform 0.6s ease;
 }
 
-/* Hover Dynamic State (Interactive Physics) */
-.owner-card-3d:hover {
-    transform: translateY(-5px) rotateX(0deg) rotateY(0deg) scale(1.02);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
-}
-
-.owner-card-3d:hover .owner-img-3d {
-    transform: scale(1.05);
-}
 /* --- PREMIUM BUSINESS FOOTER LAYOUT --- */
 .business-footer-section {
-    background-color: #1a1a1a; /* Professional Dark Base Layout */
+    background-color: #1a1a1a;
     color: #ffffff;
     padding: 60px 0 20px 0;
     margin-top: 80px;
     border-top: 3px solid var(--primary-color);
 }
 
-/* Force specific structural rules under light/dark controls if needed */
 [data-theme="dark"] .business-footer-section {
     background-color: #0d0d0d;
     border-top: 3px solid var(--primary-color);
