@@ -278,7 +278,7 @@ const translations = {
       "ہم مخصوص مکینیکل طریقوں کا استعمال کرتے ہوئے موزائیک اور گرینائٹ فرشوں کے لیے رگڑائی اور پالش کی خدمات فراہم کرتے ہیں۔",
       "ہم عمارتوں اور ولاز کے لیے قدرتی پتھر اور ماربل کے اگلے حصوں (Facades) کو صاف اور بحال کرتے ہیں تاکہ وہ نئے جیسے لگیں۔",
       "ہم ماربل کی سیڑھیوں کے اقدامات کی رگڑائی اور پالش کرتے ہیں اور ان کے کونوں کا انتہائی اعلیٰ درستگی اور پیشہ ورانہ مہارت کے ساتھ علاج کرتے ہیں۔",
-      "ہم جدید ترین اطالوی مشینیں (Hyper Grinder) استعمال کرتے ہیں تاکہ بغیر کسی لہر کے فرشوں کی بہترین لیولنگ کو یقینی بنایا جا سکے.",
+      "ہم جدید ترین اطالوی مشینیں (Hyper Grinder) استعمال کرتے ہیں تاکہ بغیر کسی لہر کے فرشوں کی بہترین لیولنگ کو یقینی بنایا جا سکے۔",
       "ہم ماحول دوست پالش کرنے والے مواد پر بھروسہ کرتے ہیں جو افراد اور پالتو جانوروں کی صحت کے لیے مکمل طور پر محفوظ ہیں۔",
       "ہماری ٹیم مکینیکل اسٹرکچرل ری لیولنگ تکنیکوں کے ذریعے ٹائل اور فرش کے بیٹھ جانے (Settlement) کا جامع علاج فراہم کرتی ہے۔",
       "ہم ریاض میں ہوٹلوں، کمپنیوں اور تجارتی مراکز میں ماربل کے فرشوں کے لیے وقفے وقفے سے دیکھ بھال (Maintenance) کی خدمات فراہم کرتے ہیں۔",
@@ -308,11 +308,16 @@ const translations = {
   }
 };
 
-/* Global Variables for Typist Engine Lifecycle Control */
-let typistInterval = null;
-let currentPhraseIdx = 0;
-let currentCharIdx = 0;
-let isTypistDeleting = false;
+// --- FEATURE: TAWK.TO LIVE CHAT WIDGET INTEGRATION ---
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/640000000000000000000000/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 
 function applyTranslations(lang) {
   // 1. Setup Document Layout Orientation Flow
@@ -411,6 +416,11 @@ function applyTranslations(lang) {
   startTypistEngine(data.typistPhrases);
 }
 
+let typistInterval = null;
+let currentPhraseIdx = 0;
+let currentCharIdx = 0;
+let isTypistDeleting = false;
+
 function startTypistEngine(phrases) {
   const typistTarget = document.getElementById("typist-text");
   if (!typistTarget) return;
@@ -441,17 +451,141 @@ function startTypistEngine(phrases) {
   typeLoop();
 }
 
-// Auto-run Arabic by default on page load if no preference is saved
-document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('selectedLang') || 'ar';
-  const languageSwitcher = document.getElementById('languageSwitcher');
+document.addEventListener("DOMContentLoaded", () => {
   
-  if (languageSwitcher) {
-    languageSwitcher.value = savedLang;
-    languageSwitcher.addEventListener('change', (e) => {
-      localStorage.setItem('selectedLang', e.target.value);
-      applyTranslations(e.target.value);
-    });
+  // Progress Bar
+  const progressBar = document.getElementById("pageProgressBar");
+  if(progressBar) {
+      window.addEventListener("scroll", () => {
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = (window.scrollY / totalHeight) * 100;
+          progressBar.style.width = progress + "%";
+      });
   }
-  applyTranslations(savedLang);
+
+  // Switcher Trigger Setup - Default set to Arabic ('ar') for Saudi market
+  const switcher = document.getElementById("languageSwitcher");
+  const initialLang = localStorage.getItem("lang") || "ar";
+  
+  if (switcher) {
+    switcher.value = initialLang;
+    applyTranslations(initialLang);
+    switcher.addEventListener("change", () => {
+      localStorage.setItem("lang", switcher.value);
+      applyTranslations(switcher.value);
+    });
+  } else {
+    applyTranslations(initialLang);
+  }
+
+  // Theme Manager
+  const themeToggle = document.getElementById("themeToggle");
+  const currentTheme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", currentTheme);
+  if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+          let theme = document.documentElement.getAttribute("data-theme");
+          if (theme === "dark") {
+              document.documentElement.setAttribute("data-theme", "light");
+              localStorage.setItem("theme", "light");
+          } else {
+              document.documentElement.setAttribute("data-theme", "dark");
+              localStorage.setItem("theme", "dark");
+          }
+      });
+  }
+
+  // Back to Top
+  const backTopBtn = document.getElementById("backToTop");
+  if (backTopBtn) {
+      window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+              backTopBtn.classList.add("show");
+          } else {
+              backTopBtn.classList.remove("show");
+          }
+      });
+      backTopBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+  }
+
+  // FAQ Logic
+  document.body.addEventListener("click", (e) => {
+      const targetHeader = e.target.closest("h5[id^='faqQ']");
+      if (targetHeader) {
+          const parentWrapper = targetHeader.parentElement;
+          if (parentWrapper) {
+              parentWrapper.classList.toggle("active");
+              const siblingPara = parentWrapper.querySelector("p[id^='faqA']");
+              if (siblingPara) {
+                  if (parentWrapper.classList.contains("active")) {
+                      siblingPara.style.maxHeight = "200px";
+                      siblingPara.style.paddingTop = "10px";
+                  } else {
+                      siblingPara.style.maxHeight = "0";
+                      siblingPara.style.paddingTop = "0";
+                  }
+              }
+          }
+      }
+  });
+
+  // Gallery 51 Images Lazy Loading Control
+  const galleryGrid = document.getElementById("galleryGrid");
+  if (galleryGrid) {
+      galleryGrid.innerHTML = ""; 
+      const currentLang = localStorage.getItem("lang") || "ar";
+      const nameData = translations[currentLang].galleryItemNames;
+
+      for (let i = 1; i <= 51; i++) {
+          const padId = i < 10 ? "0" + i : i;
+          const card = document.createElement("div");
+          card.className = "card-3d loading";
+          
+          const currentImageName = nameData && nameData[i - 1] ? nameData[i - 1] : `Professional Work ${padId}`;
+
+          card.innerHTML = `
+              <div class="skeleton-img" id="sk-img-${padId}" style="position:absolute; top:0; left:0; width:100%; height:260px; z-index:5;"></div>
+              <img src="${padId}.jpg" alt="Service Image" class="lightbox-trigger" style="opacity:0;">
+              <div class="card-info">
+                  <h3>${currentImageName}</h3>
+              </div>
+          `;
+          galleryGrid.appendChild(card);
+          const targetImg = card.querySelector("img");
+          targetImg.addEventListener("load", () => {
+              const skImg = document.getElementById(`sk-img-${padId}`);
+              if(skImg) skImg.remove();
+              targetImg.style.opacity = "1";
+              card.classList.remove("loading");
+          });
+          targetImg.addEventListener("error", () => {
+              const skImg = document.getElementById(`sk-img-${padId}`);
+              if(skImg) skImg.remove();
+              card.classList.remove("loading");
+          });
+      }
+  }
+
+  // Lightbox Managers
+  const lightbox = document.getElementById("lightboxModal");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const closeBtn = document.getElementById("lightboxClose");
+
+  document.body.addEventListener("click", (e) => {
+      if (e.target.classList.contains("lightbox-trigger")) {
+          if(lightbox && lightboxImg) {
+              lightboxImg.src = e.target.src;
+              lightbox.classList.add("show");
+          }
+      }
+  });
+
+  if (closeBtn && lightbox) {
+      closeBtn.addEventListener("click", () => lightbox.classList.remove("show"));
+      lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) lightbox.classList.remove("show");
+      });
+  }
 });
